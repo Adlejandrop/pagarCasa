@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Beautiful Table</title>
+    <title>Cuentas Casita</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
     <script>
         function copyNumeroUsuario(row) {
@@ -17,44 +18,56 @@
         }
     </script>
 </head>
+
 <body class="bg-gray-100 p-6">
 
-<div class="max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-6">
-    <h1 class="text-2xl font-bold mb-4">Cuentas Casita </h1>
-    <table class="w-full border-collapse border border-gray-300">
-        <thead>
-            <tr>
-                <th class="p-3 border border-gray-300">Servicio</th>
-                <th class="p-3 border border-gray-300">Link</th>
-                <th class="p-3 border border-gray-300">Número Usuario</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td class="p-3 border border-gray-300">Enel</td>
-                <td class="p-3 border border-gray-300">
-                    <a href="https://www.enel.cl/es/clientes/servicios-en-linea/pago-de-cuenta.html" target="_blank" style="color: blue; text-decoration: underline;" onclick="copyNumeroUsuario(this.parentElement.parentElement)";>Pagar</a>
-                </td>
-                <td class="p-3 border border-gray-300 numero-usuario">6461905</td>
-            </tr>
-            <tr>
-                <td class="p-3 border border-gray-300">Metrogas</td>
-                <td class="p-3 border border-gray-300">
-                    <a href="https://wss.metrogas.cl/pagoonline/Home/Paso1?cgspId=43101809&cgspKey=d0c80799-35e7-429b-bee6-61786ac58eb6" target="_blank" style="color: blue; text-decoration: underline;" onclick="copyNumeroUsuario(this.parentElement.parentElement)";>Pagar</a>
-                </td>
-                <td class="p-3 border border-gray-300 numero-usuario">284058801</td>
-            </tr>
-            <tr>
-                <td class="p-3 border border-gray-300">GG.CC</td>
-                <td class="p-3 border border-gray-300">transfiere bro</td>
-                <td class="p-3 border border-gray-300">  Nombre: Paloma Navarro Chackiewicz <br>
-                    Rut: 22151397-5 <br>
-                    Banco: Itau Corpbanca <br>
-                    Cuenta Corriente: 214190172  </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+    <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-6">
+        <h1 class="text-2xl font-bold mb-4">Cuentas Casita </h1>
+        <table class="w-full border-collapse border border-gray-300">
+            <thead>
+                <tr>
+                    <th class="p-3 border border-gray-300">Servicio</th>
+                    <th class="p-3 border border-gray-300">Link</th>
+                    <th class="p-3 border border-gray-300">Número Usuario</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="p-3 border border-gray-300">Enel</td>
+                    <td class="p-3 border border-gray-300">
+                        <a href="https://www.enel.cl/es/clientes/servicios-en-linea/pago-de-cuenta.html" target="_blank"
+                            style="color: blue; text-decoration: underline;"
+                            onclick="copyNumeroUsuario(this.parentElement.parentElement)" ;>Pagar</a>
+                    </td>
+                    <td class="p-3 border border-gray-300 numero-usuario">28288344</td>
+                </tr>
+                <tr>
+                    <td class="p-3 border border-gray-300">Aguas Andinas - Tiene Pago Automático</td>
+                    <td class="p-3 border border-gray-300">
+                        <a href="https://www.metrogas.cl/" target="_blank"
+                            style="color: blue; text-decoration: underline;"
+                            onclick="copyNumeroUsuario(this.parentElement.parentElement)" ;>Pagar</a>
+                    </td>
+                    <td class="p-3 border border-gray-300 numero-usuario">1842954</td>
+                </tr>
+                <tr>
+                    <td class="p-3 border border-gray-300">Metrogas</td>
+                    <td class="p-3 border border-gray-300">
+                        <a href="https://www.metrogas.cl/" target="_blank"
+                            style="color: blue; text-decoration: underline;"
+                            onclick="copyNumeroUsuario(this.parentElement.parentElement)" ;>Pagar</a>
+                    </td>
+                    <td class="p-3 border border-gray-300 numero-usuario">900677476</td>
+                </tr>
+                <tr>
+                    <td class="p-3 border border-gray-300">GG.CC</td>
+                    <td class="p-3 border border-gray-300">A traves aplicacion Comunidad Feliz</td>
+                    <td class="p-3 border border-gray-300"> </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
 </body>
+
 </html>
