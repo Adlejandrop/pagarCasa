@@ -34,6 +34,29 @@ Luego incluye `env.js` en tu `index.html` antes de los scripts de la app:
 
 El archivo `config.js` ya está preparado para leer `SUPABASE_URL` y `SUPABASE_ANON_KEY` desde el entorno (build-time) o desde `window.__ENV__` (runtime).
 
+## Desarrollo local
+
+1. Copia `.env.example` a `.env` y edita las variables con tus claves:
+
+```bash
+cp .env.example .env
+# editar .env y poner SUPABASE_URL y SUPABASE_ANON_KEY
+```
+
+2. Genera `public/env.js` desde `.env`:
+
+```bash
+npm run create-env
+```
+
+3. Levanta un servidor local y prueba la app:
+
+```bash
+npm run dev
+```
+
+`public/env.js` se genera localmente y está en `.gitignore` — no se sube al repo.
+
 ## Estructura de la Base de Datos
 
 Ejecuta el siguiente SQL en el SQL Editor de Supabase para crear las tablas:

@@ -31,6 +31,17 @@ jobs:
       - name: Build
         run: npm run build || true
 
+      - name: Prepare public folder
+        run: |
+          mkdir -p public
+          cp index.html public/ || true
+          cp app.js public/ || true
+          cp config.js public/ || true
+          cp styles.css public/ || true
+          # copy any static assets or build output if present
+          if [ -d build ]; then cp -r build/* public/; fi
+          if [ -d dist ]; then cp -r dist/* public/; fi
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:

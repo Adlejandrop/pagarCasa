@@ -25,7 +25,13 @@ content.split(/\r?\n/).forEach(line => {
 
 const outDir = path.resolve(process.cwd(), 'public');
 if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
-const outPath = path.join(outDir, 'env.js');
 const outContent = 'window.__ENV__ = ' + JSON.stringify(obj, null, 2) + ';\n';
-fs.writeFileSync(outPath, outContent, 'utf8');
-console.log('Wrote', outPath);
+
+// Write to public/env.js (used for CI/deploy) and to ./env.js (useful for local dev servers)
+const outPathPublic = path.join(outDir, 'env.js');
+fs.writeFileSync(outPathPublic, outContent, 'utf8');
+console.log('Wrote', outPathPublic);
+
+const outPathRoot = path.join(process.cwd(), 'env.js');
+fs.writeFileSync(outPathRoot, outContent, 'utf8');
+console.log('Wrote', outPathRoot);
