@@ -5,86 +5,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cuentas Casita</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
-    <script>
-        function copyNumeroUsuario(row) {
-            const numeroUsuario = row.querySelector(".numero-usuario").textContent;
-            const dummyInput = document.createElement("input");
-            document.body.appendChild(dummyInput);
-            dummyInput.value = numeroUsuario;
-            dummyInput.select();
-            document.execCommand("copy");
-            document.body.removeChild(dummyInput);
-        }
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+    <script src="config.js"></script>
+    <script src="app.js"></script>
 </head>
 
-<body class="bg-gray-100 p-6">
+<body class="app-root p-6">
 
-    <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-6">
-        <h1 class="text-2xl font-bold mb-4">Cuentas Casita </h1>
-        <table class="w-full border-collapse border border-gray-300">
+    <div class="max-w-4xl mx-auto card p-6 mb-6">
+        <h1 id="main-title" class="main-title">Cuentas Casita</h1>
+        <table class="w-full border-collapse border border-black">
             <thead>
                 <tr>
                     <th class="p-3 border border-gray-300">Servicio</th>
                     <th class="p-3 border border-gray-300">Link</th>
                     <th class="p-3 border border-gray-300">Número Usuario</th>
+                    <th class="p-3 border border-gray-300">Estado</th>
+                    <th class="p-3 border border-gray-300">Monto</th>
+                    <th class="p-3 border border-gray-300">Acción</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="current-month-container">
+                <!-- Dynamic content -->
+            </tbody>
+        </table>
+        <div class="mt-4 flex items-center" style="gap:12px;">
+            <button id="edit-btn" class="btn-edit">Editar</button>
+            <button id="cancel-btn" class="btn-edit" style="display:none;">Cancelar</button>
+        </div>
+    </div>
+
+    <div class="max-w-4xl mx-auto card p-6">
+        <h2 class="section-title">Historial de Pagos</h2>
+        <table class="w-full border-collapse border border-gray-300">
+            <thead>
                 <tr>
-                    <td class="p-3 border border-gray-300">Arriendo</td>
-                    <td class="p-3 border border-gray-300">
-                        <p>anda al banco son 620</p>
-                    </td>
-                    <td class="p-3 border border-gray-300 numero-usuario">
-                        <br>Emilia Alejandra Reyes Rodríguez
-                        <br>15.367.756-5
-                        <br>Banco Santander
-                        <br>Cuenta corriente
-                        <br>6318743-7</td>
+                    <th class="p-3 border border-gray-300">Servicio</th>
+                    <th class="p-3 border border-gray-300">Mes</th>
+                    <th class="p-3 border border-gray-300">Estado</th>
+                    <th class="p-3 border border-gray-300">Monto</th>
                 </tr>
-                <tr>
-                    <td class="p-3 border border-gray-300">Enel</td>
-                    <td class="p-3 border border-gray-300">
-                        <a href="https://www.enel.cl/es/clientes/servicios-en-linea/pago-de-cuenta.html" target="_blank"
-                            style="color: blue; text-decoration: underline;"
-                            onclick="copyNumeroUsuario(this.parentElement.parentElement)" ;>Pagar</a>
-                    </td>
-                    <td class="p-3 border border-gray-300 numero-usuario">28288344</td>
-                </tr>
-                <tr>
-                    <td class="p-3 border border-gray-300">Aguas Andinas</td>
-                    <td class="p-3 border border-gray-300">
-                        <a href="https://www.aguasandinas.cl/web/aguasandinas/pagar-mi-cuenta" target="_blank"
-                            style="color: blue; text-decoration: underline;"
-                            onclick="copyNumeroUsuario(this.parentElement.parentElement)" ;>Pagar</a>
-                    </td>
-                    <td class="p-3 border border-gray-300 numero-usuario">1842954</td>
-                </tr>
-                <tr>
-                    <td class="p-3 border border-gray-300">Metrogas</td>
-                    <td class="p-3 border border-gray-300">
-                        <a href="https://sucursalvirtual.metrogas.cl/publico/pagos/consulta" target="_blank"
-                            style="color: blue; text-decoration: underline;"
-                            onclick="copyNumeroUsuario(this.parentElement.parentElement)" ;>Pagar</a>
-                    </td>
-                    <td class="p-3 border border-gray-300 numero-usuario">900677476</td>
-                </tr>
-                <tr>
-                    <td class="p-3 border border-gray-300">Movistar Internet - contraseña entre 8 y 16 char</td>
-                    <td class="p-3 border border-gray-300">
-                        <a href="https://mi.movistar.cl/" target="_blank"
-                            style="color: blue; text-decoration: underline;"
-                            onclick="copyNumeroUsuario(this.parentElement.parentElement)" ;>Pagar</a>
-                    </td>
-                    <td class="p-3 border border-gray-300 numero-usuario">18638901-8</td>
-                </tr>
-                <tr>
-                    <td class="p-3 border border-gray-300">GG.CC</td>
-                    <td class="p-3 border border-gray-300">A traves aplicacion Comunidad Feliz</td>
-                    <td class="p-3 border border-gray-300"> </td>
-                </tr>
+            </thead>
+            <tbody id="payments-container">
+                <!-- Dynamic content -->
             </tbody>
         </table>
     </div>

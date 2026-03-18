@@ -1,0 +1,123 @@
+:root {
+  --deep-space: #003049; /* Deep Space Blue */
+  --flag-red: #d62828; /* Flag Red */
+  --princeton-orange: #f77f00; /* Princeton Orange */
+  --sunflower: #fcbf49; /* Sunflower Gold */
+  --vanilla: #eae2b7; /* Vanilla Custard */
+  --muted: #6b7280;
+}
+
+/* Typography */
+body {
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  background: var(--vanilla);
+  color: var(--deep-space);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.main-title {
+  font-family: 'Poppins', 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 1.75rem;
+  margin: 0 0 0.5rem 0;
+  color: var(--deep-space);
+}
+
+.section-title {
+  font-family: 'Poppins', 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 1.25rem;
+  margin: 0 0 0.75rem 0;
+  color: var(--deep-space);
+}
+
+.card {
+  background: var(--vanilla);
+  border-radius: 8px;
+  box-shadow: none;
+  border: 2px solid var(--deep-space);
+  padding: 18px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  background: transparent;
+}
+
+tbody, tr{
+    border-color: #003049;
+}
+
+
+th {
+  text-align: left;
+  padding: 12px 10px;
+  font-weight: 700;
+  background: var(--deep-space);
+  color: var(--vanilla);
+  border-bottom: 2px solid rgba(0,0,0,0.08);
+}
+
+td {
+  padding: 10px;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  color: var(--deep-space);
+  border-color: #003049;
+}
+
+a { color: var(--deep-space); text-decoration: underline; }
+
+input[type="number"], input[type="text"] {
+  border: 2px solid var(--deep-space);
+  padding: 6px 8px;
+  border-radius: 0;
+  background: transparent;
+  color: var(--deep-space);
+}
+
+.input-usernum, .input-link, .input-amount { width: 100%; box-sizing: border-box; }
+
+.link-pay { color: var(--deep-space); text-decoration: underline; }
+
+.btn-paid {
+  background: var(--princeton-orange);
+  color: #000;
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 2px solid var(--deep-space);
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.btn-edit {
+  background: transparent;
+  color: var(--deep-space);
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 2px solid var(--deep-space);
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.btn-cancel {
+  background: transparent;
+  color: var(--flag-red);
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 2px solid var(--flag-red);
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.btn-edit[disabled], .btn-paid[disabled] { opacity: 0.6; cursor: not-allowed; }
+
+.status-paid { color: var(--deep-space); font-weight: 600; }
+.status-due { color: var(--flag-red); font-weight: 700; }
+
+/* Small screens tweaks */
+@media (max-width: 640px) {
+  .main-title { font-size: 1.25rem; }
+  th, td { padding: 8px; }
+}
