@@ -23,72 +23,167 @@ async function loadCurrentMonthView() {
     const accounts = await fetchAccounts();
     const payments = await fetchPaymentsForMonth(currentMonth);
 
-    const container = document.getElementById('current-month-container');
-    container.innerHTML = '';
+    // Renderizar vista de desktop
+    const desktopContainer = document.getElementById('current-month-container-desktop');
+    if (desktopContainer) {
+        desktopContainer.innerHTML = '';
+        accounts.forEach(account => {
+            const payment = payments.find(p => p.account_id === account.id);
+            const status = payment ? payment.status : 'POR PAGAR';
+            const amount = payment?.amount ?? '';
 
-    accounts.forEach(account => {
-        const payment = payments.find(p => p.account_id === account.id);
-        const status = payment ? payment.status : 'POR PAGAR';
-        const amount = payment?.amount ?? '';
+            const row = document.createElement('tr');
 
-        const row = document.createElement('tr');
+            const linkCell = isEditMode
+                ? `<input type="text" id="link-${account.id}" value="${account.payment_link || ''}" class="input-link" />`
+                : `<a href="${account.payment_link || '#'}" target="_blank" class="link-pay">Pagar</a>`;
 
-        const linkCell = isEditMode
-            ? `<input type="text" id="link-${account.id}" value="${account.payment_link || ''}" class="input-link" />`
-            : `<a href="${account.payment_link || '#'}" target="_blank" class="link-pay">Pagar</a>`;
+            const usernumCell = isEditMode
+                ? `<input type="text" id="usernum-${account.id}" value="${account.client_number || ''}" class="input-usernum" />`
+                : `${account.client_number || ''}`;
 
-        const usernumCell = isEditMode
-            ? `<input type="text" id="usernum-${account.id}" value="${account.client_number || ''}" class="input-usernum" />`
-            : `${account.client_number || ''}`;
+            row.innerHTML = `
+                <td class="p-2 sm:p-3 border border-gray-300">${account.service_name}</td>
+                <td class="p-2 sm:p-3 border border-gray-300">${linkCell}</td>
+                <td class="p-2 sm:p-3 border border-gray-300">${usernumCell}</td>
+                <td class="p-2 sm:p-3 border border-gray-300"><span class="${status === 'PAGADO' ? 'status-paid' : 'status-due'}">${status}</span></td>
+                <td class="p-2 sm:p-3 border border-gray-300">
+                    <input 
+                        type="number" 
+                        id="amount-${account.id}" 
+                        value="${amount}" 
+                        placeholder="Monto"
+                        class="input-amount"
+                    >
+                </td>
+                <td class="p-2 sm:p-3 border border-gray-300">
+                    <button 
+                        onclick="markAsPaid('${account.id}')" 
+                        class="btn-paid"
+                    >
+                        Marcar Pagado
+                    </button>
+                </td>
+            `;
 
-        row.innerHTML = `
-            <td class="p-3 border border-gray-300">${account.service_name}</td>
-            <td class="p-3 border border-gray-300">${linkCell}</td>
-            <td class="p-3 border border-gray-300">${usernumCell}</td>
-            <td class="p-3 border border-gray-300">${status}</td>
-            <td class="p-3 border border-gray-300">
-                <input 
-                    type="number" 
-                    id="amount-${account.id}" 
-                    value="${amount}" 
-                    placeholder="Monto"
-                    class="input-amount"
-                >
-            </td>
-            <td class="p-3 border border-gray-300">
+            desktopContainer.appendChild(row);
+        });
+    }
+
+    // Renderizar vista de mobile
+    const mobileContainer = document.getElementById('current-month-container-mobile');
+    if (mobileContainer) {
+        mobileContainer.innerHTML = '';
+        accounts.forEach(account => {
+            const payment = payments.find(p => p.account_id === account.id);
+            const status = payment ? payment.status : 'POR PAGAR';
+            const amount = payment?.amount ?? '';
+
+            const linkValue = account.payment_link || '';
+            const usernumValue = account.client_number || '';
+
+            const linkCell = isEditMode
+                ? `<input type="text" id="link-${account.id}" value="${linkValue}" class="input-link" />`
+                : `${linkValue ? `<a href="${linkValue}" target="_blank" class="link-pay">Abrir pago</a>` : '-'}`;
+
+            const usernumCell = isEditMode
+                ? `<input type="text" id="usernum-${account.id}" value="${usernumValue}" class="input-usernum" />`
+                : usernumValue || '-';
+
+            const card = document.createElement('div');
+            card.className = 'mobile-card';
+            card.innerHTML = `
+                <div class="mobile-card-row">
+                    <span class="mobile-card-label">Servicio</span>
+                    <span class="mobile-card-value">${account.service_name}</span>
+                </div>
+                <div class="mobile-card-row">
+                    <span class="mobile-card-label">Link</span>
+                    <span class="mobile-card-value">${linkCell}</span>
+                </div>
+                <div class="mobile-card-row">
+                    <span class="mobile-card-label">Usuario</span>
+                    <span class="mobile-card-value">${usernumCell}</span>
+                </div>
+                <div class="mobile-card-row">
+                    <span class="mobile-card-label">Estado</span>
+                    <span class="mobile-card-value"><span class="${status === 'PAGADO' ? 'status-paid' : 'status-due'}">${status}</span></span>
+                </div>
+                <div class="mobile-card-row">
+                    <span class="mobile-card-label">Monto</span>
+                    <span class="mobile-card-value">
+                        <input 
+                            type="number" 
+                            id="amount-${account.id}" 
+                            value="${amount}" 
+                            placeholder="0"
+                            class="input-amount"
+                            style="max-width: 120px;"
+                        >
+                    </span>
+                </div>
                 <button 
                     onclick="markAsPaid('${account.id}')" 
-                    class="btn-paid"
+                    class="btn-paid mobile-card-button"
                 >
                     Marcar Pagado
                 </button>
-            </td>
-        `;
+            `;
 
-        container.appendChild(row);
-    });
+            mobileContainer.appendChild(card);
+        });
+    }
 }
 
 async function loadPaymentsView() {
     const payments = await fetchAllPayments();
 
-    const container = document.getElementById('payments-container');
-    container.innerHTML = '';
+    // Renderizar vista de desktop
+    const desktopContainer = document.getElementById('payments-container-desktop');
+    if (desktopContainer) {
+        desktopContainer.innerHTML = '';
+        payments.forEach(payment => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td class="p-2 sm:p-3 border border-gray-300">
+                    ${payment.accounts?.service_name || ''}
+                </td>
+                <td class="p-2 sm:p-3 border border-gray-300">${payment.month}</td>
+                <td class="p-2 sm:p-3 border border-gray-300"><span class="${payment.status === 'PAGADO' ? 'status-paid' : 'status-due'}">${payment.status}</span></td>
+                <td class="p-2 sm:p-3 border border-gray-300">${payment.amount ?? ''}</td>
+            `;
+            desktopContainer.appendChild(row);
+        });
+    }
 
-    payments.forEach(payment => {
-        const row = document.createElement('tr');
-
-        row.innerHTML = `
-            <td class="p-3 border border-gray-300">
-                ${payment.accounts?.service_name || ''}
-            </td>
-            <td class="p-3 border border-gray-300">${payment.month}</td>
-            <td class="p-3 border border-gray-300">${payment.status}</td>
-            <td class="p-3 border border-gray-300">${payment.amount ?? ''}</td>
-        `;
-
-        container.appendChild(row);
-    });
+    // Renderizar vista de mobile
+    const mobileContainer = document.getElementById('payments-container-mobile');
+    if (mobileContainer) {
+        mobileContainer.innerHTML = '';
+        payments.forEach(payment => {
+            const card = document.createElement('div');
+            card.className = 'mobile-card';
+            card.innerHTML = `
+                <div class="mobile-card-row">
+                    <span class="mobile-card-label">Servicio</span>
+                    <span class="mobile-card-value">${payment.accounts?.service_name || '-'}</span>
+                </div>
+                <div class="mobile-card-row">
+                    <span class="mobile-card-label">Mes</span>
+                    <span class="mobile-card-value">${payment.month}</span>
+                </div>
+                <div class="mobile-card-row">
+                    <span class="mobile-card-label">Estado</span>
+                    <span class="mobile-card-value"><span class="${payment.status === 'PAGADO' ? 'status-paid' : 'status-due'}">${payment.status}</span></span>
+                </div>
+                <div class="mobile-card-row">
+                    <span class="mobile-card-label">Monto</span>
+                    <span class="mobile-card-value">${payment.amount ?? '-'}</span>
+                </div>
+            `;
+            mobileContainer.appendChild(card);
+        });
+    }
 }
 
 async function markAsPaid(accountId) {

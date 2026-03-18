@@ -3,7 +3,9 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <title>Cuentas Casita</title>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
@@ -15,46 +17,69 @@
     <script src="app.js"></script>
 </head>
 
-<body class="app-root p-6">
+<body class="app-root p-4 sm:p-6">
 
-    <div class="max-w-4xl mx-auto card p-6 mb-6">
+    <div class="max-w-4xl mx-auto card p-4 sm:p-6 mb-6">
         <h1 id="main-title" class="main-title">Cuentas Casita</h1>
-        <table class="w-full border-collapse border border-black">
-            <thead>
-                <tr>
-                    <th class="p-3 border border-gray-300">Servicio</th>
-                    <th class="p-3 border border-gray-300">Link</th>
-                    <th class="p-3 border border-gray-300">Número Usuario</th>
-                    <th class="p-3 border border-gray-300">Estado</th>
-                    <th class="p-3 border border-gray-300">Monto</th>
-                    <th class="p-3 border border-gray-300">Acción</th>
-                </tr>
-            </thead>
-            <tbody id="current-month-container">
+        
+        <!-- Tabla para desktop, oculta en mobile -->
+        <div class="hidden sm:block overflow-x-auto">
+            <table class="w-full border-collapse">
+                <thead>
+                    <tr>
+                        <th class="p-2 sm:p-3 border border-gray-300">Servicio</th>
+                        <th class="p-2 sm:p-3 border border-gray-300">Link</th>
+                        <th class="p-2 sm:p-3 border border-gray-300">Número Usuario</th>
+                        <th class="p-2 sm:p-3 border border-gray-300">Estado</th>
+                        <th class="p-2 sm:p-3 border border-gray-300">Monto</th>
+                        <th class="p-2 sm:p-3 border border-gray-300">Acción</th>
+                    </tr>
+                </thead>
+                <tbody id="current-month-container-desktop">
+                    <!-- Dynamic content -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Cards para mobile, ocultas en desktop -->
+        <div class="sm:hidden space-y-3">
+            <div id="current-month-container-mobile">
                 <!-- Dynamic content -->
-            </tbody>
-        </table>
-        <div class="mt-4 flex items-center" style="gap:12px;">
+            </div>
+        </div>
+
+        <div class="mt-4 flex flex-wrap items-center gap-3">
             <button id="edit-btn" class="btn-edit">Editar</button>
             <button id="cancel-btn" class="btn-edit" style="display:none;">Cancelar</button>
         </div>
     </div>
 
-    <div class="max-w-4xl mx-auto card p-6">
+    <div class="max-w-4xl mx-auto card p-4 sm:p-6">
         <h2 class="section-title">Historial de Pagos</h2>
-        <table class="w-full border-collapse border border-gray-300">
-            <thead>
-                <tr>
-                    <th class="p-3 border border-gray-300">Servicio</th>
-                    <th class="p-3 border border-gray-300">Mes</th>
-                    <th class="p-3 border border-gray-300">Estado</th>
-                    <th class="p-3 border border-gray-300">Monto</th>
-                </tr>
-            </thead>
-            <tbody id="payments-container">
+        
+        <!-- Tabla para desktop, oculta en mobile -->
+        <div class="hidden sm:block overflow-x-auto">
+            <table class="w-full border-collapse">
+                <thead>
+                    <tr>
+                        <th class="p-2 sm:p-3 border border-gray-300">Servicio</th>
+                        <th class="p-2 sm:p-3 border border-gray-300">Mes</th>
+                        <th class="p-2 sm:p-3 border border-gray-300">Estado</th>
+                        <th class="p-2 sm:p-3 border border-gray-300">Monto</th>
+                    </tr>
+                </thead>
+                <tbody id="payments-container-desktop">
+                    <!-- Dynamic content -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Cards para mobile, ocultas en desktop -->
+        <div class="sm:hidden space-y-3">
+            <div id="payments-container-mobile">
                 <!-- Dynamic content -->
-            </tbody>
-        </table>
+            </div>
+        </div>
     </div>
 
 </body>
